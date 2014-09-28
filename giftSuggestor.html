@@ -1,0 +1,507 @@
+<html>
+   <head>
+   </head>
+   <body>
+      <style type="text/css">
+         input[type="text"] {
+         display: block;
+         margin: 0;
+         font-family: sans-serif;
+         font-size: 18px;
+         appearance: none;
+         box-shadow: none;
+         border-radius: none;
+         }	
+         .input {     border: 1px solid #006; }	
+         table a:active,
+         table a:hover {
+         color: #bd5a35;
+         text-decoration:underline;
+         }
+         table {
+         font-family:Arial, Helvetica, sans-serif;
+         color:#666;
+         font-size:12px;
+         text-shadow: 1px 1px 0px #fff;
+         background:#eaebec;
+         margin:20px;
+         border:#ccc 1px solid;
+         -moz-border-radius:3px;
+         -webkit-border-radius:3px;
+         border-radius:3px;
+         -moz-box-shadow: 0 1px 2px #d1d1d1;
+         -webkit-box-shadow: 0 1px 2px #d1d1d1;
+         box-shadow: 0 1px 2px #d1d1d1;
+         }
+         table th {
+         padding:21px 25px 22px 25px;
+         border-top:1px solid #fafafa;
+         border-bottom:1px solid #e0e0e0;
+         background: #ededed;
+         background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+         background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+         }
+         table th:first-child {
+         text-align: left;
+         padding-left:20px;
+         }
+         table tr:first-child th:first-child {
+         -moz-border-radius-topleft:3px;
+         -webkit-border-top-left-radius:3px;
+         border-top-left-radius:3px;
+         }
+         table tr:first-child th:last-child {
+         -moz-border-radius-topright:3px;
+         -webkit-border-top-right-radius:3px;
+         border-top-right-radius:3px;
+         }
+         table tr {
+         text-align: center;
+         padding-left:20px;
+         }
+         table td:first-child {
+         text-align: left;
+         padding-left:20px;
+         border-left: 0;
+         }
+         table td {
+         padding:18px;
+         border-top: 1px solid #ffffff;
+         border-bottom:1px solid #e0e0e0;
+         border-left: 1px solid #e0e0e0;
+         background: #fafafa;
+         background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+         background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+         }
+         table tr.even td {
+         background: #f6f6f6;
+         background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+         background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
+         }
+         table tr:last-child td {
+         border-bottom:0;
+         }
+         table tr:last-child td:first-child {
+         -moz-border-radius-bottomleft:3px;
+         -webkit-border-bottom-left-radius:3px;
+         border-bottom-left-radius:3px;
+         }
+         table tr:last-child td:last-child {
+         -moz-border-radius-bottomright:3px;
+         -webkit-border-bottom-right-radius:3px;
+         border-bottom-right-radius:3px;
+         }
+         table tr:hover td {
+         background: #f2f2f2;
+         background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+         background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);	
+         }
+		.warning {
+		color: #9F6000;
+		background-color: #FEEFB3;
+		
+		}
+      </style>
+      <center>
+         <b>Number of gifts</b><input type="text" id="number_Of_Gifts" />
+         <b>Maximum total Price</b><input type="text" id="max_Price"/>
+         <input type="button" id="submit1" onclick=gO("getCompany") value="submit"  />
+         <div id="statement" class="warning"></div>
+      </center>
+      <h3>
+         <div id="101">
+         </div>
+      </h3>
+      <script type="text/javascript">
+         try {
+            var elem=document.getElementById("101");
+          var max_Price= document.getElementById("max_Price").value;
+            var max_Items= document.getElementById("number_Of_Gifts").value;
+         var products_Dictionary={};
+         var products_Images = {};
+          var products = [[]];
+          var products_Number = 0;
+          var product_list = [];
+          var selected_Products=[];
+         var max_Nodes=0;
+          var total_nodes=0;
+          var max_Sum_Set=[[]];
+            var max_Sum=0;
+         var number_Of_Brands=0;
+         var brands=[];
+         var present_Brand=0
+         var brand_Number=0;
+         var searching=0;
+         var number_Of_Errors=0;
+         var position_Key=0;
+         var done=0;
+         var first=0;
+		 
+		 function initialize()
+		 {
+			  elem=document.getElementById("101");
+           max_Price= document.getElementById("max_Price").value;
+             max_Items= document.getElementById("number_Of_Gifts").value;
+          
+          
+           
+           products_Number = 0;
+           product_list = [];
+           selected_Products=[];
+          max_Nodes=0;
+           total_nodes=0;
+           max_Sum_Set=[[]];
+             max_Sum=0;
+          number_Of_Brands=0;
+          brands=[];
+          present_Brand=0
+          brand_Number=0;
+          searching=0;
+          number_Of_Errors=0;
+          position_Key=0;
+          done=0;
+          first=0;
+		 }
+		 
+		 
+		 function change(){
+			 document.location.reload();
+		 }
+            function subset_sum( s, t, s_size,  t_size, sum,  ite, target_sum,target_elements)
+            {
+            	  
+         
+         	if(t_size == target_elements-1)
+         	{
+         		var sum1=0;
+         	for (var i=0;i<t.length;i++) {
+                  
+                    	sum1+=parseFloat(products_Dictionary[t[i]]);
+                    }
+         		var next_element_value = target_sum - sum1;
+         		while((ite+1) <s_size && parseFloat(s[ite+1][1]) < next_element_value)
+         			ite++; 
+         			
+         		if(ite == s_size)
+         	return;
+         	}
+         	
+         	
+         	  if(max_Nodes>=10 || searching == 1)
+         	  return;
+                if(t_size == target_elements )
+                {
+                   
+                   
+                   product_list[total_nodes]=t;
+         			
+              
+                    var sum1=0;
+                    for (var i=0;i<t.length;i++) {
+                    value_temp=parseFloat(products_Dictionary[t[i]]);
+                    	sum1+=parseFloat(products_Dictionary[t[i]]);
+                    }
+                    if((( Math.ceil( sum1) == target_sum) ) && sum1>=max_Sum )
+         	
+                    {
+                
+                    max_Nodes++;
+         			max_Sum_Set[max_Nodes]=[];            
+         		
+         			var elem;
+         			var inter=0;
+         			for (elem in t){
+         			max_Sum_Set[max_Nodes][inter]=t[elem];
+         			inter++;
+         			}
+         			total_nodes++;
+                    
+                    max_Sum=sum1;
+                    }
+             
+                    if( (sum - parseFloat(s[ite-1][1]) + parseFloat(s[ite][1])) <= target_sum )
+                    {
+                      
+                        subset_sum(s, t, s_size, t_size-1, sum - parseFloat(s[ite-1][1]), ite , target_sum,target_elements);
+                    }
+         		else{
+         			searching =1;
+                    return;
+         		}
+                }
+                else
+                {
+         
+                    if (ite < s_size && (sum + parseFloat(s[ite][1]) <= target_sum)) {
+ 
+         		var i=ite+1;
+         		t[t_size] = s[ite][0];
+         		for(;i<s_size;i++){
+                    
+                   subset_sum(s, t, s_size, t_size + 1, sum + parseFloat(s[ite][1]), i , target_sum, target_elements);
+                   }
+             
+                }
+              }
+         }	
+         function nextIteration()
+         {
+			 if (max_Price!= document.getElementById("max_Price").value || max_Items != document.getElementById("number_Of_Gifts").value){
+			initialize();
+			max_Price = document.getElementById("max_Price").value;
+			max_Items = document.getElementById("number_Of_Gifts").value;
+			position_Key = -1;
+			//return;
+			 }
+         	while(position_Key < products.length){
+         		position_Key++;
+         		
+         	
+         		combinations= [];
+         		var i = position_Key;
+          subset_sum(products,combinations,products.length,0,0,i,parseFloat(max_Price),parseInt(max_Items));
+          if(max_Nodes >=10)
+          {
+         	
+         	 max_Nodes=0;
+         	 tableCreate();
+         	 
+          }
+           searching =0;
+          
+          
+          }
+          if(position_Key >= products.length)
+          done=1;
+          tableCreate();
+          
+         }
+         function sortFunction(a,b){
+         if (a!=='undefined' && b!=='undefined') {
+         	
+         
+         if(parseFloat(a[1])==parseFloat(b[1]))
+         return 0;
+         else {
+         	return parseFloat(a[1])<parseFloat(b[1])?-1:1;
+         }
+         }	
+         }		 
+          
+          function deleteFunction(){
+          minElements=[];/\/r/g,''
+          var i=0;
+          var min_Sum=0;
+          while((i+1)<(parseInt(max_Items))){
+          	minElements[i]=products[i];
+          	min_Sum+=parseFloat(minElements[i][1]); 	
+          	i++;
+          }
+          while(i<products.length && min_Sum+parseFloat(products[i][1])<=parseFloat(max_Price)  ){
+          if (products[i+1]===undefined) {
+          break;
+          	
+          }
+         		i++;	 
+          }
+          products=products.slice(0,i);
+          }
+          
+         function getProductsByBrand(brandName) {
+        
+         
+         	
+         if(brandName != ""){
+         brand_Number++;
+            var number_Of_Results = brandName.currentResultCount;
+            var script = document.currentScript;
+          
+           for(i=0;i<number_Of_Results;i++) {
+         
+                 price=parseFloat(max_Price);
+                 price_Elements=brandName.results[i].price.split("$");
+                 
+                 price_Element=price_Elements[1];
+                 price_Element = price_Element.replace(',','');
+           //      if (parseFloat(price_Element) <= price) {
+         		 if(!(brandName.results[i].productId in products_Dictionary)){
+         	products[products_Number]=[];
+         	products[products_Number][0]=brandName.results[i].productId;
+         	products[products_Number][1]=price_Element;
+         	products_Images[brandName.results[i].productId] = brandName.results[i].thumbnailImageUrl;;
+            products_Dictionary[brandName.results[i].productId] = price_Element;
+         	products_Number++;
+             
+             //}
+			 }
+             }
+           }
+             brand=brands[brands.length-1];
+            brandname=brand.name.split(":");
+            
+             if((script.src.indexOf(brandname[0])!=-1)){
+          
+          var key;
+           
+            var i;
+            products.sort(sortFunction);
+            deleteFunction();
+          for(key in products){
+          
+            combinations= [];
+         var i = position_Key;
+          subset_sum(products,combinations,products.length,0,0,i,parseFloat(max_Price),parseInt(max_Items));
+          if(max_Nodes >=10)
+          {
+         	 max_Nodes=0;
+         	 tableCreate();
+         	 
+          }
+          position_Key++;
+          }
+         
+         tableCreate();
+          }
+         	}
+          try{
+         function tableCreate(){
+         
+         	
+         	
+         	
+         var child = document.getElementById("submit1");
+         if(child!=null){
+         child.onclick = function(){nextIteration()};
+         child.name="next";
+         child.value="next";
+         child.id="next";
+         }
+		 else{
+			 child = document.getElementById("next");
+		 }
+         if(done == 1){
+         	
+         		child.onclick = function(){nextIteration()};
+         child.name="submit";
+         child.value="submit";
+         child.id="submit";
+           //parent.removeChild(child);
+        
+         }
+         	
+         var tables = document.getElementsByTagName("TABLE");
+         var i=tables.length-1;
+         if(max_Sum_Set.length == 1)
+         {
+         	child.onclick = function(){nextIteration()};
+         child.name="submit";
+         child.value="submit";
+         child.id="submit";
+         document.getElementById("statement").innerHTML = "No more suggestions found for the Combination, Please enter new values";
+         	return;
+         }
+         
+         
+         for (; (i>=0);i-=1)
+            tables[i].parentNode.removeChild(tables[i]);
+        
+            var body = document.body;
+            var tbl  = document.createElement('table');
+                tbl.setAttribute("id","myTable");
+                document.body.appendChild(tbl)
+            tbl.style.width='200px';
+            tbl.style.border = "1px solid black";
+            tbl.style.padding = '2';
+            var row;
+            for (row in max_Sum_Set) {
+         	var length1 = row.length;
+            	if(row == "0")
+         	continue;
+            
+         
+         var tr = document.createElement("TR");
+         document.getElementById("myTable").appendChild(tr);
+        
+         var td = document.createElement("TD");
+         var textNode1 = document.createTextNode(row);
+                   
+                    td.appendChild(textNode1);
+                    tr.appendChild(td);
+         for(var i = 0; i < parseInt(max_Items); i++){
+                
+        
+            var td2 = document.createElement("TD");
+         	var textNode3 = document.createTextNode(products_Dictionary[max_Sum_Set[row][i]]);
+         	td2.appendChild(textNode3);
+         
+         	var td3 = document.createElement("TD");
+         	var textNode4 = document.createElement('img');
+         	textNode4.src = products_Images[max_Sum_Set[row][i]];
+         	td2.appendChild(textNode4);
+         
+         	tr.appendChild(td2);       
+                    
+                
+            }
+         
+            }
+            body.appendChild(tbl);
+            max_Sum_Set=[[]];
+         
+
+         throw( "No error, just exit in JS" );
+         }}
+         catch(e){
+         number_Of_Errors++;}
+         
+         
+            function wrapper(data){
+        
+            var message="The company you work for is "+data.statusCode ;
+            var facets1 = data.facets;
+          
+            brands = facets1[0].values;
+            number_Of_Brands = brands.length;
+        
+            var script = new Array(number_Of_Brands);
+            script = document.createElement('script');
+            for ( presetnt_Brand=brand_Number;present_Brand<number_Of_Brands;present_Brand++){
+            brand=brands[present_Brand];
+            brandname=brand.name.split(":");
+            var nextBrand=brandname[0].replace(/\s+/g, '')
+            nextBrand=nextBrand.replace(/\&+/g, '');
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+         	script.async = false;
+         
+            script.src = 'http://api.zappos.com/Search?term='+nextBrand+'&excludes=[%22term%22]&key=52ddafbe3ee659bad97fcce7c53592916a6bfd73&callback=getProductsByBrand';
+           
+            document.body.appendChild(script);
+            document.body.removeChild(script);
+            }
+            
+          }	 
+          
+            function gO(callback){
+			
+          	callback = "wrapper";
+          	max_Price= document.getElementById("max_Price").value;
+            max_Items= document.getElementById("number_Of_Gifts").value;
+            script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'http://api.zappos.com/Search?facets=[%22brandFacet%22]&key=52ddafbe3ee659bad97fcce7c53592916a6bfd73&callback=wrapper';
+            document.body.appendChild(script);
+            document.body.removeChild(script);
+        
+         
+            }
+         
+          
+            
+            }catch (e) {
+         		number_Of_Errors++;
+         	}
+            
+            
+      </script>
+   </body>
